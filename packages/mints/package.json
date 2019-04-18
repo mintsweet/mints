@@ -1,0 +1,23 @@
+{
+  "name": "mints",
+  "version": "1.0.0-alpha.1",
+  "description": "simple and efficient h5 development tools",
+  "keywords": [
+    "h5",
+    "cli",
+    "mints"
+  ],
+  "engines": {
+    "node": ">=8"
+  },
+  "bin": {
+    "mints": "./bin/mints.js"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "chalk": "^2.4.2",
+    "commander": "^2.20.0",
+    "import-local-file": "^0.2.0",
+    "update-notifier": "^2.5.0"
+  }
+}
