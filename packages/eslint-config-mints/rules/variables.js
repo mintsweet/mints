@@ -20,7 +20,7 @@ module.exports = {
 
     // disallow specific global variables
     // https://eslint.org/docs/rules/no-restricted-globals
-    'no-restricted-globals': ['error', 'isFinite', 'isNaN'].concat(restrictedGlobals),
+    'no-restricted-globals': ['error', 'isFinite'].concat(restrictedGlobals),
 
     // disallow variable declarations from shadowing variables declared in the outer scope
     // https://eslint.org/docs/rules/no-shadow
