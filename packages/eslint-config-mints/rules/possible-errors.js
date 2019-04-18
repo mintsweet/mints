@@ -22,7 +22,7 @@ module.exports = {
 
     // disallow the use console
     // https://eslint.org/docs/rules/no-console
-    'no-console': ['warn', { 'allow': ['warn', 'error'] }],
+    'no-console': ['warn', { allow: ['warn', 'error'] }],
 
     // disallow constant expressions in conditions
     // https://eslint.org/docs/rules/no-constant-condition
@@ -132,4 +132,4 @@ module.exports = {
     // https://eslint.org/docs/rules/valid-typeof
     'valid-typeof': ['error', { requireStringLiterals: true }]
   }
-}
+};

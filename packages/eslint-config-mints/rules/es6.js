@@ -2,7 +2,7 @@ module.exports = {
   env: {
     es6: true
   },
-  
+
   parserOptions: {
     ecmaVersion: 2015,
     sourceType: 'module',
@@ -31,7 +31,7 @@ module.exports = {
     // https://eslint.org/docs/rules/constructor-super
     'constructor-super': 'error',
 
-    // enforce spacing around the * in generator functions 
+    // enforce spacing around the * in generator functions
     // https://eslint.org/docs/rules/generator-star-spacing
     'generator-star-spacing': ['error', 'after'],
 
@@ -55,7 +55,7 @@ module.exports = {
 
     // disallow duplicate imports
     // https://eslint.org/docs/rules/no-duplicate-imports
-    'no-duplicate-imports': ['error', { 'includeExports': true }],
+    'no-duplicate-imports': ['error', { includeExports: true }],
 
     // disallow symbol constructor
     // https://eslint.org/docs/rules/no-new-symbol
@@ -168,4 +168,4 @@ module.exports = {
     // https://eslint.org/docs/rules/yield-star-spacing
     'yield-star-spacing': ['error', 'after']
   }
-}
+};

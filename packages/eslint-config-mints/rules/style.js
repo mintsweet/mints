@@ -60,7 +60,7 @@ module.exports = {
       }
     }],
 
-    // disallow or enforce spaces inside of computed properties 
+    // disallow or enforce spaces inside of computed properties
     // https://eslint.org/docs/rules/computed-property-spacing
     'computed-property-spacing': ['error', 'never'],
 
@@ -146,7 +146,7 @@ module.exports = {
     // https://eslint.org/docs/rules/key-spacing
     'key-spacing': ['error', { beforeColon: false, afterColon: true }],
 
-    // enforce consistent spacing before and after keywords 
+    // enforce consistent spacing before and after keywords
     // https://eslint.org/docs/rules/keyword-spacing
     'keyword-spacing': ['warn', {
       before: true,
@@ -513,4 +513,4 @@ module.exports = {
     // https://eslint.org/docs/rules/wrap-regex
     'wrap-regex': 'off'
   }
-}
+};

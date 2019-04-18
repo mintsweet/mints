@@ -25,9 +25,9 @@ module.exports = {
     // disallow variable declarations from shadowing variables declared in the outer scope
     // https://eslint.org/docs/rules/no-shadow
     'no-shadow': ['off', {
-      'builtinGlobals': true,
-      'hoist': 'all',
-      'allow': []
+      builtinGlobals: true,
+      hoist: 'all',
+      allow: []
     }],
 
     // disallow shadowing of restricted names
@@ -36,7 +36,7 @@ module.exports = {
 
     // disallow Undeclared Variables
     // https://eslint.org/docs/rules/no-undef
-    'no-undef': ['error', { 'typeof': true }],
+    'no-undef': ['error', { typeof: true }],
 
     // disallow Initializing to undefined
     // https://eslint.org/docs/rules/no-undef-init
@@ -51,7 +51,7 @@ module.exports = {
     'no-unused-vars': ['error', {
       vars: 'all',
       args: 'after-used',
-      ignoreRestSiblings: true 
+      ignoreRestSiblings: true
     }],
 
     // disallow Early Use
@@ -62,4 +62,4 @@ module.exports = {
       variables: true
     }]
   }
-}
+};

@@ -14,15 +14,15 @@ module.exports = {
 
     // enforce that class methods utilize this
     // https://eslint.org/docs/rules/class-methods-use-this
-    'class-methods-use-this': ['off', { 'exceptMethods': [] }],
-    
+    'class-methods-use-this': ['off', { exceptMethods: [] }],
+
     // specify the maximum cyclomatic complexity allowed in a program
     // https://eslint.org/docs/rules/complexity
     complexity: ['off', 6],
 
     // require return statements to either always or never specify values
     // https://eslint.org/docs/rules/consistent-return
-    'consistent-return': ['off', { 'treatUndefinedAsUnspecified': true }],
+    'consistent-return': ['off', { treatUndefinedAsUnspecified: true }],
 
     // specify curly brace conventions for all control statements
     // https://eslint.org/docs/rules/curly
@@ -31,7 +31,7 @@ module.exports = {
     // require default case in switch statements
     // https://eslint.org/docs/rules/default-case
     'default-case': ['error', { commentPattern: '^no default$' }],
-    
+
     // enforce newline before and after dot
     // https://eslint.org/docs/rules/dot-location
     'dot-location': ['error', 'property'],
@@ -318,7 +318,7 @@ module.exports = {
     // https://eslint.org/docs/rules/no-with
     'no-with': 'error',
 
-    // require using error objects as promise rejection reasons 
+    // require using error objects as promise rejection reasons
     // https://eslint.org/docs/rules/prefer-promise-reject-errors
     'prefer-promise-reject-errors': ['error', { allowEmptyReject: true }],
 
@@ -326,7 +326,7 @@ module.exports = {
     // https://eslint.org/docs/rules/radix
     radix: ['error', 'as-needed'],
 
-    // disallow async functions which have no await expression 
+    // disallow async functions which have no await expression
     // https://eslint.org/docs/rules/require-await
     'require-await': 'off',
 
@@ -340,6 +340,6 @@ module.exports = {
 
     // require or disallow yoda conditions
     // https://eslint.org/docs/rules/yoda
-    'yoda': 'error'
+    yoda: 'error'
   }
-}
+};

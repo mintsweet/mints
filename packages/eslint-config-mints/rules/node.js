@@ -39,7 +39,7 @@ module.exports = {
     // disallow process.exit()
     // https://eslint.org/docs/rules/no-process-exit
     'no-process.exit': 'off',
-    
+
     // disallow Node.js modules
     // https://eslint.org/docs/rules/no-restricted-modules
     'no-restricted-modules': 'off',
@@ -48,4 +48,4 @@ module.exports = {
     // https://eslint.org/docs/rules/no-sync
     'no-sync': 'off'
   }
-}
+};
