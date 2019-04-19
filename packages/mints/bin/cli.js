@@ -3,6 +3,7 @@
 const chalk = require('chalk');
 const program = require('commander');
 const updateNotifier = require('update-notifier');
+const envinfo = require('envinfo');
 const pkg = require('../package.json');
 const Mints = require('../lib/index');
 
@@ -29,11 +30,14 @@ const builder = (cmd, prjName = 'h5-tempalte') => {
 program
   .version(pkg.version)
   .usage(`${chalk.green('<command>')} ${chalk.blue('[options]')}`)
-  .description(chalk.dim.cyan(pkg.description));
+  .description(chalk.dim.cyan(pkg.description))
+  .option('--info', 'print environment debug info');
 
 program
-  .command('new <project>')
+  .command('new <project-name>')
   .description(chalk.dim.yellow('new a template project'))
+  .option('--verbose', 'print additional logs')
+  .option('--use-npm')
   .action((project, cmd) => {
     builder(cmd, project);
   });
@@ -60,3 +64,22 @@ program
 
 program
   .parse(process.argv);
+
+if (program.info) {
+  console.log(chalk.bold('\nEnvironment Info:'));
+  return envinfo
+    .run(
+      {
+        System: ['OS', 'CPU'],
+        Binaries: ['Node', 'npm', 'Yarn'],
+        Browsers: ['Chrome', 'Edge', 'Internet Explorer', 'Firefox', 'Safari'],
+        npmPackages: [],
+        npmGlobalPackages: [],
+      },
+      {
+        duplicates: true,
+        showNotFound: true,
+      }
+    )
+    .then(console.log);
+}

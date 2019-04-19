@@ -1,18 +1,16 @@
 const loadConfig = require('./utils/loadConfig');
 const generateOption = require('./utils/generateOption');
-const logger = require('./logger');
+const cmd = require('./cmds');
 
 class Mints {
   constructor(cmd) {
     const cmdOpt = generateOption(cmd);
     const configOpt = loadConfig(cmd.config);
-
     this.opts = Object.assign({}, configOpt, cmdOpt);
-    logger.setOptions(this.opts);
   }
 
   create(prjName) {
-    logger.info(prjName);
+    cmd.new(prjName, this.opts);
   }
 
   start() {}
