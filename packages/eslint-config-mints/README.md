@@ -18,4 +18,4 @@ In your `.eslintrc.*`:
 
 ## License
 
-[MIT](./LICENSE).
+MIT
