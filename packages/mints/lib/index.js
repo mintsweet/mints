@@ -1,6 +1,7 @@
 const loadConfig = require('./utils/loadConfig');
 const generateOption = require('./utils/generateOption');
-const webpackConfig = require('./utils/webpackConfig');
+const webpackDev = require('./webpack/dev');
+const webpackProd = require('./webpack/prod');
 const cmd = require('./cmds');
 
 class Mints {
@@ -15,10 +16,12 @@ class Mints {
   }
 
   start() {
-    cmd.start(webpackConfig(this.opts), this.opts);
+    cmd.start(webpackDev(this.opts), this.opts);
   }
 
-  build() {}
+  build() {
+    cmd.build(webpackProd(this.opts), this.opts);
+  }
 }
 
 module.exports = Mints;

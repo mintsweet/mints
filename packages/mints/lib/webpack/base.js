@@ -1,54 +1,8 @@
-const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const rule = require('./rules');
 
 const entry = opts => {
   return opts.entry || './index.js';
-};
-
-const jsRule = opts => {
-  return {
-    test: /\.js$/,
-    include: [
-      path.join(opts.cwd, './src')
-    ],
-    use: {
-      loader: 'babel-loader',
-      options: {
-        presets: ['@babel/preset-env'],
-      },
-    },
-  };
-};
-
-const cssRule = () => {
-  return {
-    test: /\.css$/,
-    use: [
-      {
-        loader: 'style-loader',
-      },
-      {
-        loader: 'css-loader',
-      }
-    ]
-  };
-};
-
-const lessRule = () => {
-  return {
-    test: /\.less$/,
-    use: [
-      {
-        loader: 'style-loader',
-      },
-      {
-        loader: 'css-loader',
-      },
-      {
-        loader: 'less-loader',
-      }
-    ]
-  };
 };
 
 const html = opts => {
@@ -64,11 +18,6 @@ const html = opts => {
 module.exports = options => {
   return {
     /**
-     * 执行模式
-     */
-    mode: options.mode,
-
-    /**
      * 基础目录
      */
     context: options.cwd,
@@ -83,7 +32,7 @@ module.exports = options => {
      */
     output: {
       path: options.outDir,
-      filename: '[name].js',
+      filename: '[name].[hash].js',
       publicPath: options.publicUrl
     },
 
@@ -101,9 +50,9 @@ module.exports = options => {
      */
     module: {
       rules: [
-        jsRule(options),
-        cssRule(options),
-        lessRule(options),
+        rule.js(options),
+        rule.css(options),
+        rule.less(options),
       ],
     },
 
