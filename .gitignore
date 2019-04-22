@@ -2,6 +2,7 @@
 node_modules
 
 # testing
+demo
 coverage
 
 # production

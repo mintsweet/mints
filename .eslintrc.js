@@ -1,4 +1,10 @@
 const eslintConfig = {
+  parser: 'babel-eslint',
+
+  globals: {
+    window: true
+  },
+
   extends: './packages/eslint-config-mints/index.js',
 
   rules: {
