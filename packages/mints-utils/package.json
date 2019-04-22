@@ -1,0 +1,10 @@
+{
+  "name": "mints-utils",
+  "version": "1.0.0-alpha.1",
+  "description": "utils package for mints",
+  "keywords": [
+    "mints",
+    "utils"
+  ],
+  "license": "MIT"
+}
