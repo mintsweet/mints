@@ -29,6 +29,10 @@ $ mints start
 $ mints build
 ```
 
+## Document
+
+[document](./docs/README.md)
+
 ## License
 
 MIT
