@@ -5,7 +5,7 @@ module.exports = cmd => {
     cwd: process.cwd(),
     mode: cmd.name() === 'build' ? 'production' : 'development',
     outDir: cmd.outDir || path.join(process.cwd(), './dist'),
-    publicUrl: cmd.name() === 'build' ? cmd.publicUrl : '/',
+    publicUrl: cmd.publicUrl || '/',
     port: cmd.port || 4255,
     host: cmd.host || 'localhost',
   };

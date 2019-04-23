@@ -45,6 +45,9 @@ program
 program
   .command('start')
   .description(chalk.dim.yellow('start a development service'))
+  .option('-m --mode <type>', 'specity your application type MPA or SPA')
+  .option('-d --out-dir <dir>', 'the directory to output files')
+  .option('--public-url <url>', 'the base URL your application bundle will be deployed at')
   .option('-p --port <port>', 'set service port')
   .option('-h --host <host>', 'set service host')
   .action(builder);
@@ -52,6 +55,9 @@ program
 program
   .command('build')
   .description(chalk.dim.yellow('build your application'))
+  .option('-m --mode <type>', 'specity your application type MPA or SPA')
+  .option('-d --out-dir <dir>', 'the directory to output files')
+  .option('--public-url <url>', 'the base URL your application bundle will be deployed at')
   .action(builder);
 
 program
