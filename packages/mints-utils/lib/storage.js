@@ -1,10 +1,10 @@
 // 设置 localStorage
-export const setLocal = (key, data) => {
+const setLocal = (key, data) => {
   window.localStorage.setItem(key, JSON.stringify(data));
 };
 
 // 获取 localStroge
-export const getLocal = key => {
+const getLocal = key => {
   const data = window.localStorage.getItem(key);
 
   try {
@@ -15,6 +15,13 @@ export const getLocal = key => {
 };
 
 // 清除 localStorge
-export const clearLocal = () => {
+const clearLocal = () => {
   window.localStorage.clear();
 };
+
+export default {
+  set: setLocal,
+  get: getLocal,
+  clear: clearLocal
+};
+
