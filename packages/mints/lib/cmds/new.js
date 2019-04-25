@@ -6,7 +6,7 @@ const validateProjectName = require('validate-npm-package-name');
 const spawn = require('cross-spawn');
 const logger = require('../logger');
 
-const ALL_DEPENDENCIES = ['mints-template'];
+const ALL_DEPENDENCIES = ['mints-template', 'mints-utils'];
 
 const install = () => {
   return new Promise((resolve, reject) => {

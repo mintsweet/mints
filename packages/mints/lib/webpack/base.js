@@ -1,18 +1,65 @@
+const path = require('path');
+const glob = require('glob');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const WebpackBar = require('webpackbar');
 const rule = require('./rules');
 
+const getPageDir = () => {
+  const globPath = 'src/pages/**/*.html';
+  const pathDir = 'src/pages(/|\\\\)(.*?)(/|\\\\)html';
+  const files = glob.sync(globPath);
+
+  const entries = [];
+
+  let dirname;
+
+  for (let i = 0; i < files.length; i++) {
+    dirname = path.dirname(files[i]);
+    entries.push(dirname.replace(new RegExp(`^${pathDir}`), '$2'));
+  }
+
+  return entries;
+};
+
 const entry = opts => {
-  return opts.entry || './index.js';
+  if (opts.entry) return opts.entry;
+
+  if (opts.mode === 'MPA') {
+    const obj = {};
+    getPageDir().forEach(item => {
+      const name = path.basename(item);
+      obj[name] = path.join(opts.cwd, item, 'index.js');
+    });
+    return obj;
+  } else {
+    return './index.js';
+  }
 };
 
 const html = opts => {
-  return Object.keys(opts.html).map(key => {
-    return new HtmlWebpackPlugin({
-      filename: `${key}.html`,
-      template: opts.html[key],
-      chunks: [key],
+  if (opts.html) return opts.html;
+
+  if (opts.mode === 'MPA') {
+    const arr = [];
+    getPageDir().forEach(item => {
+      const name = path.basename(item);
+      arr.push(new HtmlWebpackPlugin({
+        filename: `${name}.html`,
+        template: path.join(opts.cwd, item, 'index.html'),
+        chunks: [name],
+        inject: true,
+      }));
     });
-  });
+    return arr;
+  } else {
+    return [
+      new HtmlWebpackPlugin({
+        filename: 'index.html',
+        template: 'index.html',
+        inject: true,
+      })
+    ];
+  }
 };
 
 module.exports = options => {
@@ -59,6 +106,10 @@ module.exports = options => {
     /**
      * 插件
      */
-    plugins: [].concat(html(options)),
+    plugins: [
+      new WebpackBar({
+        name: 'Mints',
+      })
+    ].concat(html(options)),
   };
 };

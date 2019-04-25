@@ -4,23 +4,40 @@ const logger = require('../logger');
 
 module.exports = (config, options) => {
   logger.setOptions(options);
+  logger.info('Staring the development server...');
 
   const PORT = options.port;
   const HOST = options.host;
 
   const webpackDevConfig = {
     hot: true,
+    noInfo: true,
   };
 
+  // create compiler
   const compiler = webpack(config);
 
+  // create server
   const server = new WebpackDevServer(compiler, webpackDevConfig);
 
-  server.listen(PORT, HOST, err => {
-    if (err) {
-      logger.error(err);
-      return false;
+  ['SIGINT', 'SIGTERM'].forEach(signal => {
+    process.on(signal, () => {
+      server.close(() => {
+        process.exit(0);
+      });
+    });
+  });
+
+  compiler.hooks.done.tap('mints start', stats => {
+    if (stats.hasErrors()) {
+      return;
     }
-    logger.success('Staring the development server...\n');
+
+    server.listen(PORT, HOST, err => {
+      if (err) {
+        logger.error(err);
+        return false;
+      }
+    });
   });
 };
