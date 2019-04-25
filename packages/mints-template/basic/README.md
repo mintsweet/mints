@@ -15,7 +15,7 @@
       └── index.js      # 页面事件处理
       └── index.html    # 
       └── index.less    # 页面样式
-    └── page2           # 页面2
+    └── demonstrate     # 演示页面
       └── index.js      # 
       └── index.html    # 
       └── index.less    #
@@ -43,9 +43,14 @@ npm run prod
 ### .mintsrc.js 配置
 
 ```javascript
-module.exports = (config) => {
-  return {
-    ...config,
-  }
+export default {
+  // 多页应用 MPA | 单页应该 SPA
+  mode: 'MPA',
+
+  // 入口 | 无需配置自动寻在入口
+  entry: {
+    index: './src/pages/index/index.js',
+    page2: './src/pages/page2/index.js',
+  },
 };
 ```

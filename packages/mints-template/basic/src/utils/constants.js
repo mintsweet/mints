@@ -2,3 +2,13 @@
 export const Paths = {
 
 };
+
+// Server
+export const Servers = {
+  dev: {
+
+  },
+  prod: {
+
+  },
+};
