@@ -1,0 +1,13 @@
+{
+  "name": "mints-ui",
+  "version": "1.0.0-alpha.1",
+  "description": "ui package for mints",
+  "keywords": [
+    "mints",
+    "ui"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "mints-utils": "^1.0.0-alpha.1"
+  }
+}
