@@ -11,11 +11,11 @@ Related to the operating environment.
 Use this method to get device type run your application.
 
 ```javascript
-import { getDevice } from 'mints-utils';
+import { device } from 'mints-utils';
 
-const isAndroid = getDevice() === 'android' ? true : false;
-const isIos = getDevice() === 'ios' ? true : false;
-const isOther = getDevice() !== 'android' && getDevice() !== 'ios';
+const isAndroid = device === 'android' ? true : false;
+const isIos = device === 'ios' ? true : false;
+const isOther = device !== 'android' && device !== 'ios';
 ```
 
 ### isWX
@@ -25,7 +25,7 @@ Determine if your app in wechat.
 ```javascript
 import { isWx } from 'mints-utils';
 
-if (isWx()) {
+if (isWx) {
   return true;
 } else {
   return false;
@@ -39,7 +39,7 @@ Determine if your app in QQ.
 ```javascript
 import { isQQ } from 'mints-utils';
 
-if (isQQ()) {
+if (isQQ) {
   return true;
 } else {
   return false;
