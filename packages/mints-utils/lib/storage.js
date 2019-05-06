@@ -6,7 +6,6 @@ const setLocal = (key, data) => {
 // 获取 localStroge
 const getLocal = key => {
   const data = window.localStorage.getItem(key);
-
   try {
     return JSON.parse(data);
   } catch(err) {

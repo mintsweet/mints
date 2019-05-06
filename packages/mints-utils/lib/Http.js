@@ -29,4 +29,22 @@ export default class Http {
       data
     });
   }
+
+  del(api = '', data = {}) {
+    return axios({
+      url: api,
+      method: 'delete',
+      baseURL: this.host,
+      data
+    });
+  }
+
+  put(api = '', data = {}) {
+    return axios({
+      url: api,
+      method: 'put',
+      baseURL: this.host,
+      data
+    });
+  }
 }
