@@ -15,15 +15,18 @@
       └── index.js      # 页面事件处理
       └── index.html    # 
       └── index.less    # 页面样式
-    └── demonstrate     # 演示页面
+    └── utils-show      # 工具库演示页面
       └── index.js      # 
       └── index.html    # 
       └── index.less    #
   ├── styles            #
       └── global.less   # 公共样式
+      └── reset.less    # 重置样式
       └── variable.less # 公共变量
   ├── utils             #
-      └── App.js        # 初始启动文件 
+      └── App.js        # 初始启动文件
+      └── constants.js  # 公共常量存储文件
+      └── Request.js    # 请求方法封装
 ```
 
 ### 打包命名
@@ -34,10 +37,10 @@
 npm start
 ```
 
-打包
+打包内容
 
 ```bash
-npm run prod
+npm run build
 ```
 
 ### .mintsrc.js 配置
