@@ -1,5 +1,11 @@
 import axios from 'axios';
 
+axios.interceptors.response.use(res => {
+  return res.data;
+}, err => {
+  return Promise.reject(err.response.data);
+});
+
 export default class Http {
   constructor(host, opts) {
     this.host = host;

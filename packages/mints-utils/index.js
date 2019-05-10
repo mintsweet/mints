@@ -5,6 +5,7 @@ import storage from './lib/storage';
 import url from './lib/url';
 import format from './lib/format';
 import Http from './lib/Http';
+import FullPage from './lib/FullPage';
 
 export default {
   $,
@@ -14,4 +15,5 @@ export default {
   url,
   format,
   Http,
+  FullPage,
 };
