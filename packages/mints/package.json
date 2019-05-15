@@ -29,6 +29,7 @@
     "import-local-file": "^0.2.0",
     "less": "^3.9.0",
     "less-loader": "^4.1.0",
+    "mini-css-extract-plugin": "^0.6.0",
     "style-loader": "^0.23.1",
     "update-notifier": "^2.5.0",
     "validate-npm-package-name": "^3.0.0",

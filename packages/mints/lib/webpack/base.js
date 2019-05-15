@@ -2,6 +2,7 @@ const path = require('path');
 const glob = require('glob');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const WebpackBar = require('webpackbar');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const rule = require('./rules');
 
 const getPageDir = () => {
@@ -88,7 +89,7 @@ module.exports = options => {
      */
     resolve: {
       alias: {
-        '@': './src'
+        '@': path.join(options.cwd, './src')
       },
     },
 
@@ -109,7 +110,11 @@ module.exports = options => {
     plugins: [
       new WebpackBar({
         name: 'Mints',
-      })
+      }),
+      new MiniCssExtractPlugin({
+        filename: '[name].css',
+        chunkFilename: '[id].css',
+      }),
     ].concat(html(options)),
   };
 };
