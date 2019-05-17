@@ -98,9 +98,11 @@ module.exports = options => {
      */
     module: {
       rules: [
+        rule.eslint(options),
         rule.js(options),
         rule.css(options),
         rule.less(options),
+        rule.url(options)
       ],
     },
 
