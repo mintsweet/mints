@@ -3,7 +3,6 @@ const glob = require('glob');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const WebpackBar = require('webpackbar');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const rule = require('./rules');
 
 const getPageDir = () => {
   const globPath = 'src/pages/**/*.html';
@@ -63,12 +62,46 @@ const html = opts => {
   }
 };
 
-module.exports = options => {
+const getStyleLoaders = (cssOptions, preProcessor) => {
+  const loaders = [
+    cssOptions.env === 'dev'
+      ? {
+        loader: 'style-loader'
+      }
+      : {
+        loader: MiniCssExtractPlugin.loader
+      },
+    {
+      loader: 'css-loader',
+      options: {
+
+      }
+    },
+    {
+      loader: 'postcss-loader'
+    }
+  ].filter(Boolean);
+
+  if (preProcessor) {
+    loaders.push({
+      loader: require.resolve(preProcessor)
+    });
+  }
+
+  return loaders;
+};
+
+module.exports = (options, env) => {
   return {
     /**
      * 基础目录
      */
     context: options.cwd,
+
+    /**
+     * 环境
+     */
+    mode: env === 'prod' ? 'production' : 'development',
 
     /**
      * 起点或者是应用程序的起点入口
@@ -98,11 +131,61 @@ module.exports = options => {
      */
     module: {
       rules: [
-        rule.eslint(options),
-        rule.js(options),
-        rule.css(options),
-        rule.less(options),
-        rule.url(options)
+        {
+          test: /\.(js|mjs|jsx|ts|tsx)$/,
+          enforce: 'pre',
+          include: path.join(options.cwd, './src'),
+          use: [
+            {
+              loader: require.resolve('eslint-loader')
+            },
+          ],
+        },
+        {
+          test: /\.js$/,
+          include: path.join(options.cwd, './src'),
+          use: {
+            loader: 'babel-loader',
+            options: {
+              presets: ['@babel/preset-env'],
+            },
+          },
+        },
+        {
+          test: /\.css$/,
+          exclude: /\.module\.css$/,
+          use: getStyleLoaders({
+            env,
+          }),
+        },
+        {
+          test: /\.module\.css$/,
+          use: getStyleLoaders({
+            env,
+            modules: true,
+          }),
+        },
+        {
+          test: /\.less$/,
+          use: getStyleLoaders({
+            env,
+          }, 'less-loader')
+        },
+        {
+          test: /\.module\.less$/,
+          use: getStyleLoaders({
+            env,
+            modules: true
+          }, 'less-loader')
+        },
+        {
+          test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
+          loader: require.resolve('url-loader'),
+          options: {
+            limit: 10000,
+            name: '[name].[hash:8].[ext]',
+          }
+        }
       ],
     },
 
