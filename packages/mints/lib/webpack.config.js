@@ -62,9 +62,9 @@ const html = opts => {
   }
 };
 
-const getStyleLoaders = (cssOptions, preProcessor) => {
+const getStyleLoaders = (env, cssOptions, preProcessor) => {
   const loaders = [
-    cssOptions.env === 'dev'
+    env === 'dev'
       ? {
         loader: 'style-loader'
       }
@@ -73,9 +73,7 @@ const getStyleLoaders = (cssOptions, preProcessor) => {
       },
     {
       loader: 'css-loader',
-      options: {
-
-      }
+      options: cssOptions
     },
     {
       loader: 'postcss-loader'
@@ -92,43 +90,30 @@ const getStyleLoaders = (cssOptions, preProcessor) => {
 };
 
 module.exports = (options, env) => {
+  const isEnvDevelopment = env === 'dev';
+  const isEnvProduction = env === 'prod';
+
   return {
-    /**
-     * 基础目录
-     */
     context: options.cwd,
 
-    /**
-     * 环境
-     */
     mode: env === 'prod' ? 'production' : 'development',
 
-    /**
-     * 起点或者是应用程序的起点入口
-     */
+    devtool: isEnvProduction ? 'souce-map' : isEnvDevelopment && 'cheap-module-source-map',
+
     entry: entry(options),
 
-    /**
-     * 输出
-     */
     output: {
       path: options.outDir,
       filename: '[name].[hash].js',
       publicPath: options.publicUrl
     },
 
-    /**
-     * 解析
-     */
     resolve: {
       alias: {
         '@': path.join(options.cwd, './src')
       },
     },
 
-    /**
-     * 模块
-     */
     module: {
       rules: [
         {
@@ -160,21 +145,17 @@ module.exports = (options, env) => {
         },
         {
           test: /\.module\.css$/,
-          use: getStyleLoaders({
-            env,
+          use: getStyleLoaders(env, {
             modules: true,
           }),
         },
         {
           test: /\.less$/,
-          use: getStyleLoaders({
-            env,
-          }, 'less-loader')
+          use: getStyleLoaders(env, {}, 'less-loader')
         },
         {
           test: /\.module\.less$/,
-          use: getStyleLoaders({
-            env,
+          use: getStyleLoaders(env, {
             modules: true
           }, 'less-loader')
         },
@@ -188,18 +169,14 @@ module.exports = (options, env) => {
         }
       ],
     },
-
-    /**
-     * 插件
-     */
-    plugins: [
+    plugins: html(options).concat([
       new WebpackBar({
         name: 'Mints',
       }),
-      new MiniCssExtractPlugin({
+      isEnvProduction && new MiniCssExtractPlugin({
         filename: '[name].css',
         chunkFilename: '[id].css',
-      }),
-    ].concat(html(options)),
+      })
+    ])
   };
 };
