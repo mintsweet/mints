@@ -55,7 +55,7 @@ Whether to enable module for CSS files.
 ### css.sourceMap
 
   * Type: `boolean`
-  * Default: `true`
+  * Default: `false`
   * CLI: no support
 
 Whether to enable source map for CSS files.
@@ -83,3 +83,11 @@ Configure server port.
   * CLI: `-h --host <host>`
 
 Configure server host.
+
+## proxy
+
+  * Type: `object`
+  * Default: `{}`
+  * CLI: no support
+
+Configure the [proxy] (https://webpack.js.org/configuration/dev-server/#devserver-proxy) property of `webpack-dev-server`.
