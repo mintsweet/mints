@@ -12,6 +12,7 @@ module.exports = (config, options) => {
   const webpackDevConfig = {
     hot: true,
     noInfo: true,
+    proxy: options.proxy,
   };
 
   // create compiler

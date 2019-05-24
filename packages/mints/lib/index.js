@@ -1,13 +1,13 @@
 const loadConfig = require('./utils/loadConfig');
 const generateOption = require('./utils/generateOption');
-const webpack = require('./webpack.config');
+const webpackConfig = require('./webpack.config');
 const cmd = require('./cmds');
 
 class Mints {
   constructor(cmd) {
-    const cmdOpt = generateOption(cmd);
-    const configOpt = loadConfig(cmd.config);
-    this.opts = Object.assign({}, configOpt, cmdOpt);
+    const defaultOptions = generateOption(cmd);
+    const configOptions = loadConfig(cmd.config);
+    this.opts = Object.assign({}, configOptions, defaultOptions);
   }
 
   create(prjName) {
@@ -15,11 +15,11 @@ class Mints {
   }
 
   start() {
-    cmd.start(webpack(this.opts, 'dev'), this.opts);
+    cmd.start(webpackConfig(this.opts, 'dev'), this.opts);
   }
 
   build() {
-    cmd.build(webpack(this.opts, 'prod'), this.opts);
+    cmd.build(webpackConfig(this.opts, 'prod'), this.opts);
   }
 }
 

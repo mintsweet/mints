@@ -21,86 +21,88 @@ const getPageDir = () => {
   return entries;
 };
 
-const entry = opts => {
-  if (opts.entry) return opts.entry;
-
-  if (opts.mode === 'MPA') {
-    const obj = {};
-    getPageDir().forEach(item => {
-      const name = path.basename(item);
-      obj[name] = path.join(opts.cwd, item, 'index.js');
-    });
-    return obj;
-  } else {
-    return './index.js';
-  }
-};
-
-const html = opts => {
-  if (opts.html) return opts.html;
-
-  if (opts.mode === 'MPA') {
-    const arr = [];
-    getPageDir().forEach(item => {
-      const name = path.basename(item);
-      arr.push(new HtmlWebpackPlugin({
-        filename: `${name}.html`,
-        template: path.join(opts.cwd, item, 'index.html'),
-        chunks: [name],
-        inject: true,
-      }));
-    });
-    return arr;
-  } else {
-    return [
-      new HtmlWebpackPlugin({
-        filename: 'index.html',
-        template: 'index.html',
-        inject: true,
-      })
-    ];
-  }
-};
-
-const getStyleLoaders = (env, cssOptions, preProcessor) => {
-  const loaders = [
-    env === 'dev'
-      ? {
-        loader: 'style-loader'
-      }
-      : {
-        loader: MiniCssExtractPlugin.loader
-      },
-    {
-      loader: 'css-loader',
-      options: cssOptions
-    },
-    {
-      loader: 'postcss-loader'
-    }
-  ].filter(Boolean);
-
-  if (preProcessor) {
-    loaders.push({
-      loader: require.resolve(preProcessor)
-    });
-  }
-
-  return loaders;
-};
-
 module.exports = (options, env) => {
+  console.log(options);
+
   const isEnvDevelopment = env === 'dev';
   const isEnvProduction = env === 'prod';
 
+  const generateEntry = () => {
+    if (options.entry) return options.entry;
+
+    if (options.mode === 'MPA') {
+      const obj = {};
+      getPageDir().forEach(item => {
+        const name = path.basename(item);
+        obj[name] = path.join(options.cwd, item, 'index.js');
+      });
+      return obj;
+    } else {
+      return './index.js';
+    }
+  };
+
+  const alias = Object.assign(
+    {
+      '@': path.join(options.cwd, './src')
+    },
+    options.alias
+  );
+
+  const generateStyleLoader = (cssOptions, preProcessor) => {
+    const loaders = [
+      isEnvDevelopment === 'dev'
+        ? { loader: 'style-loader' }
+        : { loader: MiniCssExtractPlugin.loader },
+      {
+        loader: 'css-loader',
+        options: cssOptions
+      },
+      {
+        loader: 'postcss-loader'
+      }
+    ].filter(Boolean);
+
+    if (preProcessor) {
+      loaders.push({
+        loader: require.resolve(preProcessor)
+      });
+    }
+
+    return loaders;
+  };
+
+  const generateHTMLPlugin = () => {
+    if (options.html) return options.html;
+
+    if (options.mode === 'MPA') {
+      const arr = [];
+      getPageDir().forEach(item => {
+        const name = path.basename(item);
+        arr.push(new HtmlWebpackPlugin({
+          filename: `${name}.html`,
+          template: path.join(options.cwd, item, 'index.html'),
+          chunks: [name],
+          inject: true,
+        }));
+      });
+      return arr;
+    } else {
+      return [
+        new HtmlWebpackPlugin({
+          filename: 'index.html',
+          template: 'index.html',
+          inject: true,
+        })
+      ];
+    }
+  };
+
   return {
     context: options.cwd,
-
-    mode: env === 'prod' ? 'production' : 'development',
-
-    devtool: isEnvProduction ? 'souce-map' : isEnvDevelopment && 'cheap-module-source-map',
-
-    entry: entry(options),
+    mode: isEnvProduction ? 'production' : 'development',
+    devtool: isEnvProduction ? false : 'cheap-module-source-map',
+    entry: generateEntry(),
 
     output: {
       path: options.outDir,
@@ -109,9 +111,7 @@ module.exports = (options, env) => {
     },
 
     resolve: {
-      alias: {
-        '@': path.join(options.cwd, './src')
-      },
+      alias,
     },
 
     module: {
@@ -139,37 +139,31 @@ module.exports = (options, env) => {
         {
           test: /\.css$/,
           exclude: /\.module\.css$/,
-          use: getStyleLoaders({
-            env,
-          }),
+          use: generateStyleLoader(),
         },
-        {
+        options.css.module && {
           test: /\.module\.css$/,
-          use: getStyleLoaders(env, {
-            modules: true,
-          }),
+          use: generateStyleLoader({ modules: true }),
         },
         {
           test: /\.less$/,
-          use: getStyleLoaders(env, {}, 'less-loader')
+          use: generateStyleLoader({}, 'less-loader')
         },
-        {
+        options.css.module && {
           test: /\.module\.less$/,
-          use: getStyleLoaders(env, {
-            modules: true
-          }, 'less-loader')
+          use: generateStyleLoader({ modules: true }, 'less-loader')
         },
         {
           test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
-          loader: require.resolve('url-loader'),
+          loader: 'url-loader',
           options: {
-            limit: 10000,
-            name: '[name].[hash:8].[ext]',
+            limit: 8192,
+            name: '[name].[hash].[ext]',
           }
         }
       ],
     },
-    plugins: html(options).concat([
+    plugins: generateHTMLPlugin().concat([
       new WebpackBar({
         name: 'Mints',
       }),

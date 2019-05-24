@@ -63,7 +63,7 @@ program
 program
   .on('--help', () => {
     console.log('');
-    console.log(`  Run ${chalk.bold.red('mints help <command>')} for more information on specific commands`);
+    console.log(`  Run ${chalk.bold.red('mints <command> -h(--help)')} for more information on specific commands.`);
     console.log('  If you have some questions or suggestions, welcome to contribute.');
     console.log('');
   });
