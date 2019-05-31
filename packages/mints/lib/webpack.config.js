@@ -22,8 +22,6 @@ const getPageDir = () => {
 };
 
 module.exports = (options, env) => {
-  console.log(options);
-
   const isEnvDevelopment = env === 'dev';
   const isEnvProduction = env === 'prod';
 
@@ -122,7 +120,7 @@ module.exports = (options, env) => {
           include: path.join(options.cwd, './src'),
           use: [
             {
-              loader: require.resolve('eslint-loader')
+              loader: 'eslint-loader'
             },
           ],
         },
@@ -163,6 +161,7 @@ module.exports = (options, env) => {
         }
       ],
     },
+
     plugins: generateHTMLPlugin().concat([
       new WebpackBar({
         name: 'Mints',
