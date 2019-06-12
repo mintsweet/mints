@@ -1,2 +1,5 @@
 # development
 node_modules
+
+# production
+lib

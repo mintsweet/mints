@@ -1,30 +1,28 @@
 const tempDom = document.createElement('div');
 
-const query = (selector, element) => {
+const query = (selector, element = document) => {
+  selector = selector.trim();
   const maybeID = selector[0] === '#';
   const maybeClass = !maybeID && selector[0] === '.';
   const nameOnly = maybeID || maybeClass ? selector.slice(1) : selector;
   const isSimple = /^[\w-]*$/.test(nameOnly);
-  let el;
+  let dom = [];
 
   if (maybeID && isSimple && element.getElementById) {
     const found = element.getElementById(nameOnly);
     if (found) {
-      el = [found];
+      dom = [found];
     }
   } else if ([1, 9, 11].indexOf(element.nodeType) !== -1) {
     if (!maybeID && isSimple && element.getElementsByClassName) {
       if (maybeClass) {
-        el = element.getElementsByClassName(nameOnly);
+        dom = element.getElementsByClassName(nameOnly);
       } else {
-        el = element.getElementsByTagName(selector);
+        dom = element.getElementsByTagName(selector);
       }
-    } else {
-      el = element.querySelectorAll(selector);
     }
   }
-
-  return Array.prototype.slice.call(el);
+  return Array.prototype.slice.call(dom);
 };
 
 class D {
@@ -32,7 +30,7 @@ class D {
     this.el = el;
   }
 
-  html(html = '') {
+  html(html) {
     this.el.forEach(item => {
       item.innerHTML = html;
     });
