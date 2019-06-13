@@ -1,17 +1,27 @@
-const { userAgent } = window.navigator;
-
 // 获取设备类型
-export const device = (() => {
+const device = () => {
+  const { userAgent } = window.navigator;
+
   if (/Android/i.test(userAgent)) {
     return 'android';
   } else if (/iPhone|iPod|iPad/i.test(userAgent)) {
     return 'ios';
   }
   return false;
-})();
+};
 
-// 判断是否在微信中
-export const isWx = (() => /MicroMessenger/i.test(userAgent))();
+// 获取 App 类型
+const app = () => {
+  const { userAgent } = window.navigator;
 
-// 判断是否在QQ中
-export const isQQ = (() => /qq/i.test(userAgent))();
+  if (/MicroMessenger/i.test(userAgent)) {
+    return 'wechat';
+  }
+
+  return false;
+};
+
+export default {
+  device,
+  app,
+};

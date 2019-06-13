@@ -17,10 +17,15 @@
     "verbose": true,
     "collectCoverage": true,
     "coverageDirectory": "./coverage",
-    "coverageReporters": ["html"]
+    "coverageReporters": [
+      "html"
+    ],
+    "testEnvironment": "jest-environment-jsdom-global"
   },
   "babel": {
-    "presets": ["@babel/preset-env"]
+    "presets": [
+      "@babel/preset-env"
+    ]
   },
   "dependencies": {
     "axios": "^0.18.0"
@@ -30,6 +35,8 @@
     "@babel/core": "^7.4.5",
     "@babel/preset-env": "^7.4.5",
     "babel-jest": "^24.8.0",
-    "jest": "^24.8.0"
+    "jest": "^24.8.0",
+    "jest-environment-jsdom": "^24.8.0",
+    "jest-environment-jsdom-global": "^1.2.0"
   }
 }
