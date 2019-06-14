@@ -1,32 +1,29 @@
-const formatDate = (val, format = 'YYYY-MM-DD') => {
-  if (!val) return '';
+const formatDate = (date, format = 'YYYY-MM-DD') => {
+  if (!(date instanceof Date)) return '';
 
-  const date = new Date(parseInt(val));
   const o = {
-    'M+': date.getMonth() + 1,
-    'D+': date.getDate(),
-    'H+': date.getHours(),
-    'm+': date.getMinutes(),
-    's+': date.getSeconds(),
+    'M+': date.getMonth() + 1, // 月份
+    'D+': date.getDate(), // 日
+    'H+': date.getHours(), // 小时
+    'm+': date.getMinutes(), // 分
+    's+': date.getSeconds(), // 秒
   };
 
-  let result;
-
-  if (/Y+/.test(format)) {
-    result = result.replace(RegExp.$1, (date.getFullYear().toString()).substr(4 - RegExp.$1.length));
+  if (/(Y+)/.test(format)) {
+    format = format.replace(RegExp.$1, (date.getFullYear().toString()).substr(4 - RegExp.$1.length));
   }
 
   Object.keys(o).forEach(key => {
-    if (new RegExp(key).test(format)) {
-      result = result.replace(RegExp.$1, (RegExp.$1.length === 1) ? o[key] : (`00${o[key]}`).substr((o[key].toString()).length));
+    if (new RegExp(`(${key})`).test(format)) {
+      format = format.replace(RegExp.$1, (RegExp.$1.length === 1) ? o[key] : (`00${o[key]}`).substr((o[key].toString()).length));
     }
   });
 
-  return result;
+  return format;
 };
 
-const formatMoney = (val, fix = 2, scale = 100) => {
-  return parseFloat((val / scale)).toFixed(fix);
+const formatMoney = (val, symbol = '', fix = 2, scale = 100) => {
+  return `${symbol}${parseFloat((val / scale)).toFixed(fix)}`;
 };
 
 export default {
