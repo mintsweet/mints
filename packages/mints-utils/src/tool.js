@@ -1,9 +1,9 @@
 import { device } from './env';
 
-export const setTitle = (title = '') => {
+const setTitle = (title = '') => {
   window.document.title = title;
 
-  if (device === 'ios') {
+  if (device() === 'ios') {
     const iframe = window.document.createElement('iframe');
     iframe.style.visibility = 'hidden';
     iframe.style.width = '1px';
@@ -15,4 +15,8 @@ export const setTitle = (title = '') => {
     };
     document.body.appendChild(iframe);
   }
+};
+
+export default {
+  title: setTitle,
 };

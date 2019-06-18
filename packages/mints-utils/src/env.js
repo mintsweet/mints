@@ -1,5 +1,5 @@
 // 获取设备类型
-const device = () => {
+export const device = () => {
   const { userAgent } = window.navigator;
 
   if (/Android/i.test(userAgent)) {
