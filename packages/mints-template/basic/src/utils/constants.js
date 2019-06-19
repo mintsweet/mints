@@ -5,9 +5,9 @@ export const Paths = {
 // Server
 export const Servers = {
   dev: {
-    user: ''
+    user: '/user'
   },
   prod: {
-    user: ''
+    user: '/user'
   },
 };

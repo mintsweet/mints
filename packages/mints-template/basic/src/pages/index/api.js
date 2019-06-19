@@ -2,6 +2,6 @@ import Request from '@/utils/Request';
 
 const { get } = new Request('user');
 
-export const getUser = () => {
-  return get('/v1/user');
+export const getUsers = () => {
+  return get('/v1/users', { mock: true });
 };

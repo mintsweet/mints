@@ -1,1 +1,33 @@
-@import '../../styles/global.less';
+@import '~@/styles/global.less';
+
+.block {
+  padding: 10px 0;
+  text-align: center;
+  background: #e1e1e1;
+
+  &:nth-child(odd) {
+    background: #fff;
+  }
+
+  .title {
+    margin-bottom: 15px;
+    font-size: 18px;
+  }
+
+  .btn {
+    display: inline-block;
+    padding: 4px 10px;
+    text-align: center;
+    color: #fff;
+    background: #eb2f96;
+  }
+
+  input {
+    margin: 0 auto 15px;
+    display: block;
+    padding: 0 10px;
+    height: 28px;
+    font-size: 14px;
+    border: 1px solid #eee;
+  }
+}

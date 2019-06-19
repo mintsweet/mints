@@ -1,6 +1,7 @@
 export default class App {
-  constructor(opts) {
-    const { isDebug } = opts;
-    this.isDebug = isDebug || true;
+  constructor({
+    debug = true
+  }) {
+    this.debug = debug;
   }
 }
