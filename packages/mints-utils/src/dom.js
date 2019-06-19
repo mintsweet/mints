@@ -20,6 +20,8 @@ const query = (selector, element = document) => {
       } else {
         dom = element.getElementsByTagName(selector);
       }
+    } else {
+      dom = element.querySelectorAll(selector);
     }
   }
   return Array.prototype.slice.call(dom);
@@ -66,6 +68,22 @@ class D {
       }
     });
     return this;
+  }
+
+  on(type, selector, cb) {
+    this.el.forEach(item => {
+      let dom = item;
+
+      if (selector && typeof selector !== 'function') {
+        dom = query(selector, item);
+
+        dom.forEach(child => {
+          child.addEventListener(type, cb.bind(new D([child])));
+        });
+      } else {
+        dom.addEventListener(type, selector.bind(this));
+      }
+    });
   }
 }
 

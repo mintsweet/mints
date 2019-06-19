@@ -65,3 +65,29 @@ test('function hide is right', () => {
 
   expect(document.getElementById('test').style.display).toEqual('none');
 });
+
+test('function on is right', () => {
+  document.body.innerHTML = `
+    <button id="button"></button>
+    <div id="test">
+      <button id="test-button"></button>
+    </div>
+  `;
+
+  $('#button').on('click', function() {
+    this.html('button');
+  });
+
+  $('#test').on('click', '#test-button', function() {
+    this.html('test-button');
+  });
+
+  const button = document.getElementById('button');
+  const testButton = document.getElementById('test-button');
+
+  button.click();
+  testButton.click();
+
+  expect(button.innerHTML).toEqual('button');
+  expect(testButton.innerHTML).toEqual('test-button');
+});
