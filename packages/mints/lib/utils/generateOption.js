@@ -4,7 +4,6 @@ module.exports = cmd => {
   return {
     cwd: process.cwd(),
     mode: cmd.mode || 'MPA',
-    entry: {},
     outDir: cmd.outDir || path.join(process.cwd(), './dist'),
     publicUrl: cmd.publicUrl || '/',
     css: {

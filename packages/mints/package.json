@@ -16,6 +16,7 @@
   "license": "MIT",
   "dependencies": {
     "@babel/core": "^7.4.3",
+    "@babel/plugin-proposal-class-properties": "^7.4.4",
     "@babel/preset-env": "^7.4.3",
     "babel-loader": "^8.0.5",
     "chalk": "^2.4.2",
@@ -31,6 +32,8 @@
     "less": "^3.9.0",
     "less-loader": "^4.1.0",
     "mini-css-extract-plugin": "^0.6.0",
+    "postcss-flexbugs-fixes": "^4.1.0",
+    "postcss-loader": "^3.0.0",
     "style-loader": "^0.23.1",
     "update-notifier": "^2.5.0",
     "url-loader": "^1.1.2",

@@ -10,9 +10,7 @@ module.exports = (config, options) => {
   const HOST = options.host;
 
   const webpackDevConfig = {
-    hot: true,
-    noInfo: true,
-    proxy: options.proxy,
+    stats: "errors-only"
   };
 
   // create compiler

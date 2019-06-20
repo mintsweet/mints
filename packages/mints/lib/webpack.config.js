@@ -49,7 +49,7 @@ module.exports = (options, env) => {
 
   const generateStyleLoader = (cssOptions, preProcessor) => {
     const loaders = [
-      isEnvDevelopment === 'dev'
+      isEnvDevelopment
         ? { loader: 'style-loader' }
         : { loader: MiniCssExtractPlugin.loader },
       {
@@ -57,7 +57,13 @@ module.exports = (options, env) => {
         options: cssOptions
       },
       {
-        loader: 'postcss-loader'
+        loader: require.resolve('postcss-loader'),
+        options: {
+          ident: 'postcss',
+          plugins: () => [
+            require('postcss-flexbugs-fixes'),
+          ]
+        }
       }
     ].filter(Boolean);
 
@@ -96,10 +102,25 @@ module.exports = (options, env) => {
     }
   };
 
+  const plugins = generateHTMLPlugin()
+    .concat([
+      new WebpackBar({
+        name: 'Mints',
+      }),
+      isEnvProduction && new MiniCssExtractPlugin({
+        filename: '[name].css',
+        chunkFilename: '[id].css',
+      })
+    ])
+    .filter(Boolean);
+
   return {
     context: options.cwd,
+
     mode: isEnvProduction ? 'production' : 'development',
+
     devtool: isEnvProduction ? false : 'cheap-module-source-map',
+
     entry: generateEntry(),
 
     output: {
@@ -128,9 +149,14 @@ module.exports = (options, env) => {
           test: /\.js$/,
           include: path.join(options.cwd, './src'),
           use: {
-            loader: 'babel-loader',
+            loader: require.resolve('babel-loader'),
             options: {
               presets: ['@babel/preset-env'],
+              plugins: [
+                [
+                  require.resolve('@babel/plugin-proposal-class-properties')
+                ]
+              ]
             },
           },
         },
@@ -153,7 +179,7 @@ module.exports = (options, env) => {
         },
         {
           test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
-          loader: 'url-loader',
+          loader: require.resolve('url-loader'),
           options: {
             limit: 8192,
             name: '[name].[hash].[ext]',
@@ -162,14 +188,6 @@ module.exports = (options, env) => {
       ],
     },
 
-    plugins: generateHTMLPlugin().concat([
-      new WebpackBar({
-        name: 'Mints',
-      }),
-      isEnvProduction && new MiniCssExtractPlugin({
-        filename: '[name].css',
-        chunkFilename: '[id].css',
-      })
-    ])
+    plugins
   };
 };
