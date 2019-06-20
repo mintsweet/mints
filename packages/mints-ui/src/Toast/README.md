@@ -4,6 +4,8 @@
 
 ```javascript
 import { Toast } from 'mints-ui';
+
+this.toast = new Toast();
 ```
 
 ### 代码演示
@@ -11,15 +13,13 @@ import { Toast } from 'mints-ui';
 #### 文字提示
 
 ```javascript
-Toast('提示内容');
-
-Toast.info('提示内容')
+this.toast.info('提示内容')
 ```
 
 #### 加载提示
 
 ```javascript
-Toast.loading({
+this.toast.loading({
   mask: true,
   text: '加载中',
 });
@@ -28,8 +28,8 @@ Toast.loading({
 #### 成功/失败提示
 
 ```javascript
-Toast.success('成功文案);
-Toast.fail('失败文案');
+this.toast.success('成功文案);
+this.toast.fail('失败文案');
 ```
 
 ### 属性
@@ -44,10 +44,10 @@ Toast.fail('失败文案');
 
 ### 方法
 
-| 方法名        | 参数           | 返回值     | 说明         |
-| :------------ | :------------- | :--------- | :----------- |
-| Toast         | `options|text` | toast 实例 | 展示提示     |
-| Toast.loading | `options|text` | toast 实例 | 展示加载提示 |
-| Toast.success | `options|text` | toast 实例 | 展示成功提示 |
-| Toast.fail    | `options|text` | toast 实例 | 展示失败提示 |
+| 方法名        | 参数           | 说明         |
+| :------------ | :------------- | :----------- |
+| toast.info    | `options|text` | 展示提示     |
+| toast.loading | `options|text` | 展示加载提示 |
+| toast.success | `options|text` | 展示成功提示 |
+| toast.fail    | `options|text` | 展示失败提示 |
 

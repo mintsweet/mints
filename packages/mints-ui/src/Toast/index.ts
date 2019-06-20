@@ -8,7 +8,7 @@ interface IToastOption {
   mask?: boolean;
 };
 
-class Toast {
+export default class Toast {
   dom: HTMLElement;
   timer: any;
   id: string;
@@ -40,7 +40,7 @@ class Toast {
   private init({ text, time = 3000, icon, mask = false }: IToastOption) {
     const existDom = $(`#${this.id}`);
     if (existDom) {
-      this.remove();
+      existDom.remove();
     }
 
     this.create({
@@ -63,12 +63,7 @@ class Toast {
     this.dom.id = this.id;
     this.dom.setAttribute('class', `${mask ? 'mt-toast mt-toast-mask' : 'mt-toast'}`);
     document.body.appendChild(this.dom);
-    this.dom.innerHTML = `
-      <div class="mt-toast">
-
-      </div>
-    `;
+    this.dom.innerHTML = `<div class="mt-toast">${text}</div>`;
   }
 }
 
-export default new Toast();
