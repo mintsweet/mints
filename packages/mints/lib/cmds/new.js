@@ -1,25 +1,49 @@
 const path = require('path');
 const fs = require('fs-extra');
 const os = require('os');
+const execSync = require('child_process').execSync;
 const chalk = require('chalk');
 const validateProjectName = require('validate-npm-package-name');
 const spawn = require('cross-spawn');
-const logger = require('../logger');
+const logger = require('../utils/logger');
 
 const ALL_DEPENDENCIES = ['mints-template', 'mints-utils'];
 
-const install = () => {
+const install = (root, useYarn, verbose) => {
+  logger.info('Installing mints mints-template mints-utils and mints-ui...');
+
   return new Promise((resolve, reject) => {
-    const command = 'npm';
-    const args = [
-      'install',
-      '--save',
-    ].concat(ALL_DEPENDENCIES);
+    let command;
+    let args;
+
+    if (useYarn) {
+      command = 'yarnpkg';
+      args = ['add', '--exact'];
+
+      [].push.apply(args, ALL_DEPENDENCIES);
+      args.push('--cwd');
+      args.push(root);
+    } else {
+      command = 'npm';
+      args = [
+        'install',
+        '--save',
+        '--save-exact',
+        '--loglevel',
+        'error',
+      ].concat(ALL_DEPENDENCIES);
+    }
+
+    if (verbose) {
+      args.push('--verbose');
+    }
 
     const child = spawn(command, args, { stdio: 'inherit' });
     child.on('close', code => {
       if (code !== 0) {
-        reject(new Error(`${command} ${args.join(' ')}`));
+        reject({
+          command: `${command} ${args.join(' ')}`,
+        });
         return;
       }
       resolve();
@@ -32,8 +56,8 @@ const generateFile = (appPath, appName, template = 'basic') => {
 
   appPkg.dependencies = appPkg.dependencies || {};
   appPkg.scripts = {
-    start: 'mints start',
-    build: 'mints build',
+    start: 'node ../packages/mints/bin/mints.js start',
+    build: 'node ../packages/mints/bin/mints.js build',
   };
 
   appPkg.eslintConfig = {
@@ -58,7 +82,7 @@ const generateFile = (appPath, appName, template = 'basic') => {
   if (fs.existsSync(templatePath)) {
     fs.copySync(templatePath, appPath);
   } else {
-    logger.error(`could not locate supplied template: ${chalk.green(templatePath)}`);
+    logger.error(`Could not locate supplied template: ${chalk.green(templatePath)}`);
     return false;
   }
 
@@ -78,7 +102,7 @@ const generateFile = (appPath, appName, template = 'basic') => {
     }
   }
 
-  logger.success(`Success! Created ${appName} at ${appPath}`);
+  logger.done(`Success! Created ${appName} at ${appPath}`);
 };
 
 module.exports = (name, options) => {
@@ -102,12 +126,13 @@ module.exports = (name, options) => {
       process.exit(1);
     }
 
-    if (/$mints/.test(name)) {
+    if (/mints/g.test(name)) {
       logger.error(`we cannot create a project called ${name}, because cannot use project name with mints.`);
       process.exit(1);
     }
   };
 
+  // 检测 npm
   const checkThatNpmCanReadCwd = () => {
     const cwd = process.cwd();
     let childOutput = null;
@@ -149,13 +174,23 @@ module.exports = (name, options) => {
     return false;
   };
 
+  // 检测 yarn
+  const shouldUseYarn = () => {
+    try {
+      execSync('yarnpkg --version', { stdio: 'ignore' });
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
   const root = path.resolve(name);
   const appName = path.basename(root);
 
   checkAppName(appName);
   fs.ensureDirSync(name);
 
-  logger.info(`create a new mints project in ${root}`);
+  logger.info(`Create a new mints project in ${root}`);
 
   const pkgJson = {
     name: appName,
@@ -168,17 +203,56 @@ module.exports = (name, options) => {
     JSON.stringify(pkgJson, null, 2) + os.EOL
   );
 
-  // const originalDirectory = process.cwd();
+  const useYarn = options.useNpm ? false : shouldUseYarn();
   process.chdir(root);
 
-  if (!checkThatNpmCanReadCwd()) {
+  if (!useYarn && !checkThatNpmCanReadCwd()) {
     process.exit(1);
   }
 
-  logger.info('installing packages. This might take a couple of minutes.');
+  logger.info('Installing packages. This might take a couple of minutes.');
 
-  install()
+  install(root, useYarn)
     .then(() => {
       generateFile(root, appName);
+    })
+    .catch(reason => {
+      logger.warn('Aborting installation.');
+      if (reason.command) {
+        logger.error(`  ${reason.command} has failed.`);
+      } else {
+        logger.error('Unexpected error. Please report it as a bug:');
+        logger.error(reason);
+      }
+
+      // On 'exit' we will delete these files from target directory.
+      const knownGeneratedFiles = [
+        'package.json',
+        'yarn.lock',
+        'node_modules',
+      ];
+      const currentFiles = fs.readdirSync(path.join(root));
+      currentFiles.forEach(file => {
+        knownGeneratedFiles.forEach(fileToMatch => {
+          // This removes all knownGeneratedFiles.
+          if (file === fileToMatch) {
+            logger.info(`Deleting generated file... ${chalk.cyan(file)}`);
+            fs.removeSync(path.join(root, file));
+          }
+        });
+      });
+      const remainingFiles = fs.readdirSync(path.join(root));
+      if (!remainingFiles.length) {
+        // Delete target folder if empty
+        logger.info(
+          `Deleting ${chalk.cyan(`${appName}/`)} from ${chalk.cyan(
+            path.resolve(root, '..')
+          )}`
+        );
+        process.chdir(path.resolve(root, '..'));
+        fs.removeSync(path.join(root));
+      }
+      logger.info('Done.');
+      process.exit(1);
     });
 };

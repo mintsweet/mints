@@ -1,20 +1,63 @@
+const os = require('os');
+const chalk = require('chalk');
 const webpack = require('webpack');
 const WebpackDevServer = require('webpack-dev-server');
-const logger = require('../logger');
+const logger = require('../utils/logger');
+const pkg = require('../../package.json');
 
 module.exports = (config, options) => {
   logger.setOptions(options);
-  logger.info('Staring the development server...');
 
+  logger.clear();
+  logger.info('Starting the development server...\n');
+
+  let isFirstCompile = true;
+  const IS_CI = !!process.env.CI;
+  const SILENT = !!process.env.SILENT;
   const PORT = options.port;
   const HOST = options.host;
 
-  const webpackDevConfig = {
-    stats: "errors-only"
-  };
-
   // create compiler
   const compiler = webpack(config);
+
+  compiler.hooks.done.tap('mints start', stats => {
+    if (stats.hasErrors()) {
+      return;
+    }
+
+    if (isFirstCompile && !IS_CI && !SILENT) {
+      const IP = getNetworkAddress();
+      const localAddress = `http://localhost:${PORT}`;
+      const networkAddress = `http://${IP}:${PORT}`;
+      const docAddress = 'https://github.com/mintsweet/mints/blob/master/docs/README.md';
+
+      const message = [
+        chalk.blue('Welcome to use mints, serving your mints project!'),
+        '',
+        `  ${chalk.bold('- Local:')}            ${localAddress}`,
+        `  ${chalk.bold('- On Your Network:')}  ${networkAddress}`,
+        `  ${chalk.bold('- Documentation:')}    ${docAddress}`,
+        '',
+        `${chalk.grey('The current mints version is')} ${chalk.cyan(pkg.version)}`,
+      ];
+
+      console.log(message.join('\n'));
+
+      isFirstCompile = false;
+    }
+  });
+
+  const webpackDevConfig = {
+    headers: {
+      'access-control-allow-origin': '*',
+    },
+    quiet: true,
+    overlay: {
+      warnings: false,
+      errors: true
+    },
+    open: isFirstCompile,
+  };
 
   // create server
   const server = new WebpackDevServer(compiler, webpackDevConfig);
@@ -27,16 +70,22 @@ module.exports = (config, options) => {
     });
   });
 
-  compiler.hooks.done.tap('mints start', stats => {
-    if (stats.hasErrors()) {
-      return;
+  server.listen(PORT, HOST, err => {
+    if (err) {
+      logger.error(err);
+      return false;
     }
-
-    server.listen(PORT, HOST, err => {
-      if (err) {
-        logger.error(err);
-        return false;
-      }
-    });
   });
 };
+
+function getNetworkAddress() {
+  const interfaces = os.networkInterfaces();
+  for (const name of Object.keys(interfaces)) {
+    for (const interface of interfaces[name]) {
+      const { address, family, internal } = interface;
+      if (family === 'IPv4' && !internal) {
+        return address;
+      }
+    }
+  }
+}

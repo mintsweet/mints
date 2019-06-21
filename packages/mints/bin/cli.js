@@ -45,19 +45,19 @@ program
 program
   .command('start')
   .description(chalk.dim.yellow('start a development service'))
-  .option('-m --mode <type>', 'specity your application type MPA or SPA')
   .option('-d --out-dir <dir>', 'the directory to output files')
   .option('--public-url <url>', 'the base URL your application bundle will be deployed at')
-  .option('-p --port <port>', 'set service port')
-  .option('-h --host <host>', 'set service host')
+  .option('-P --port <port>', 'set service port')
+  .option('-H --host <host>', 'set service host')
+  .option('--log-level <level>', 'set log level')
   .action(builder);
 
 program
   .command('build')
   .description(chalk.dim.yellow('build your application'))
-  .option('-m --mode <type>', 'specity your application type MPA or SPA')
   .option('-d --out-dir <dir>', 'the directory to output files')
   .option('--public-url <url>', 'the base URL your application bundle will be deployed at')
+  .option('--log-level <level>', 'set log level')
   .action(builder);
 
 program

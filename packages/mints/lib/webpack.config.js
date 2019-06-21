@@ -3,23 +3,8 @@ const glob = require('glob');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const WebpackBar = require('webpackbar');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-
-const getPageDir = () => {
-  const globPath = 'src/pages/**/*.html';
-  const pathDir = 'src/pages(/|\\\\)(.*?)(/|\\\\)html';
-  const files = glob.sync(globPath);
-
-  const entries = [];
-
-  let dirname;
-
-  for (let i = 0; i < files.length; i++) {
-    dirname = path.dirname(files[i]);
-    entries.push(dirname.replace(new RegExp(`^${pathDir}`), '$2'));
-  }
-
-  return entries;
-};
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
 
 module.exports = (options, env) => {
   const isEnvDevelopment = env === 'dev';
@@ -104,15 +89,23 @@ module.exports = (options, env) => {
 
   const plugins = generateHTMLPlugin()
     .concat([
-      new WebpackBar({
-        name: 'Mints',
-      }),
+      new WebpackBar(),
+      new CleanWebpackPlugin(),
+      new FriendlyErrorsWebpackPlugin(),
       isEnvProduction && new MiniCssExtractPlugin({
         filename: '[name].css',
         chunkFilename: '[id].css',
-      })
+      }),
     ])
     .filter(Boolean);
+
+  const optimization = isEnvProduction
+    ? {
+      splitChunks: {
+        chunks: 'all'
+      }
+    }
+    : {};
 
   return {
     context: options.cwd,
@@ -132,6 +125,8 @@ module.exports = (options, env) => {
     resolve: {
       alias,
     },
+
+    optimization,
 
     module: {
       rules: [
@@ -190,4 +185,21 @@ module.exports = (options, env) => {
 
     plugins
   };
+};
+
+function getPageDir() {
+  const globPath = 'src/pages/**/*.html';
+  const pathDir = 'src/pages(/|\\\\)(.*?)(/|\\\\)html';
+  const files = glob.sync(globPath);
+
+  const entries = [];
+
+  let dirname;
+
+  for (let i = 0; i < files.length; i++) {
+    dirname = path.dirname(files[i]);
+    entries.push(dirname.replace(new RegExp(`^${pathDir}`), '$2'));
+  }
+
+  return entries;
 };

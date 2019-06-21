@@ -14,5 +14,7 @@ module.exports = cmd => {
     port: cmd.port || 4255,
     host: cmd.host || 'localhost',
     proxy: {},
+    useNpm: cmd.useNpm || false,
+    verbose: cmd.verbose || false,
   };
 };

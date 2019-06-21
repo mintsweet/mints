@@ -1,6 +1,6 @@
 {
   "name": "mints",
-  "version": "1.0.0-alpha.1",
+  "version": "1.0.0-beta.1",
   "description": "simple and efficient h5 development tools",
   "keywords": [
     "h5",
@@ -20,11 +20,13 @@
     "@babel/preset-env": "^7.4.3",
     "babel-loader": "^8.0.5",
     "chalk": "^2.4.2",
+    "clean-webpack-plugin": "^3.0.0",
     "commander": "^2.20.0",
     "cross-spawn": "^6.0.5",
     "css-loader": "^2.1.1",
     "envinfo": "^7.2.0",
     "eslint-loader": "^2.1.2",
+    "friendly-errors-webpack-plugin": "^1.7.0",
     "fs-extra": "^7.0.1",
     "glob": "^7.1.3",
     "html-webpack-plugin": "^3.2.0",
