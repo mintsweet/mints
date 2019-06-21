@@ -5,7 +5,7 @@ import './index.less';
 
 class Index extends App {
   dom = {
-    main: $('#js-main'),
+    list: $('#js-list'),
   }
 
   init() {
@@ -19,13 +19,13 @@ class Index extends App {
 
   renderDom(data) {
     const dom = data.users.map(item => `
-      <div>
+      <li>
         <span>${item.nickname}</span>
         <span>${item.email}</span>
-      </div>
+      </li>
     `);
 
-    this.dom.main.html(dom);
+    this.dom.list.html(dom);
   }
 }
 

@@ -6,13 +6,13 @@ export default {
     users: [
       {
         id: 1,
-        nickname: '青湛',
-        username: '0x1304570@gmail.com'
+        nickname: '一号用户',
+        email: '123456@gmail.com'
       },
       {
         id: 2,
         nickname: '二号用户',
-        username: '12356@qq.com'
+        email: '12356@qq.com'
       },
     ],
   },
