@@ -47,6 +47,8 @@ module.exports = (options, env) => {
           ident: 'postcss',
           plugins: () => [
             require('postcss-flexbugs-fixes'),
+            require('postcss-pxtorem')({
+            }),
           ]
         }
       }
