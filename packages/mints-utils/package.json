@@ -10,7 +10,8 @@
   "main": "lib/index.js",
   "scripts": {
     "test": "jest",
-    "build": "babel ./src --out-dir ./lib"
+    "build": "babel ./src --out-dir ./lib",
+    "prepublish": "npm test && npm build"
   },
   "jest": {
     "verbose": true,
@@ -23,12 +24,7 @@
   "babel": {
     "presets": [
       [
-        "@babel/preset-env",
-        {
-          "targets": {
-            "node": "current"
-          }
-        }
+        "@babel/preset-env"
       ]
     ]
   },
