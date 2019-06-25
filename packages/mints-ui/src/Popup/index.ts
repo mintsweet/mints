@@ -1,4 +1,5 @@
 import { $ } from 'mints-utils';
+import './index.less';
 
 export default class Popup {
   id: string;
