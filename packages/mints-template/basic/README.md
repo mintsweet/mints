@@ -1,6 +1,6 @@
 # mints-template
 
-> mints 项目公共模板
+> 项目模板
 
 ### 目录结构
 
@@ -37,7 +37,13 @@
 npm start
 ```
 
-打包内容
+打包测试环境
+
+```bash
+npm run build --qa
+```
+
+打包线上内容
 
 ```bash
 npm run build
