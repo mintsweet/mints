@@ -13,6 +13,11 @@ const getLocal = key => {
   }
 };
 
+// 删除指定 localStorage
+const delLocal = key => {
+  window.localStorage.removeItem(key);
+};
+
 // 清除 localStorge
 const clearLocal = () => {
   window.localStorage.clear();
@@ -21,6 +26,7 @@ const clearLocal = () => {
 export default {
   set: setLocal,
   get: getLocal,
-  clear: clearLocal
+  del: delLocal,
+  clear: clearLocal,
 };
 

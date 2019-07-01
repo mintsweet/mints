@@ -15,6 +15,16 @@ test('test function storage\'s get', () => {
   });
 });
 
+test('test function storage\'s del', () => {
+  storage.set('token', 'test');
+
+  expect(storage.get('token')).toEqual('test');
+
+  storage.del('token');
+
+  expect(storage.get('token')).toEqual(null);
+});
+
 test('test function storage\'s clear', () => {
   storage.set('token', 'test');
 
