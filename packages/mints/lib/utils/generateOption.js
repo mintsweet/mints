@@ -16,5 +16,6 @@ module.exports = cmd => {
     proxy: {},
     useNpm: cmd.useNpm || false,
     verbose: cmd.verbose || false,
+    qa: cmd.qa || false,
   };
 };

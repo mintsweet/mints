@@ -94,6 +94,9 @@ module.exports = (options, env) => {
       new WebpackBar(),
       new CleanWebpackPlugin(),
       new FriendlyErrorsWebpackPlugin(),
+      new webpack.DefinePlugin({
+        DEPLOY_ENV: isEnvProduction ? options.qa ? 'qa' : 'prod' : 'dev',
+      }),
       isEnvProduction && new MiniCssExtractPlugin({
         filename: '[name].css',
         chunkFilename: '[id].css',

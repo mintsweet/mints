@@ -3,6 +3,7 @@ const chalk = require('chalk');
 const webpack = require('webpack');
 const WebpackDevServer = require('webpack-dev-server');
 const logger = require('../utils/logger');
+const applyMock = require('../utils/applyMock');
 const pkg = require('../../package.json');
 
 module.exports = (config, options) => {
@@ -57,6 +58,7 @@ module.exports = (config, options) => {
       errors: true
     },
     open: isFirstCompile,
+    proxy: options.proxy
   };
 
   // create server
@@ -69,6 +71,9 @@ module.exports = (config, options) => {
       });
     });
   });
+
+  // mock
+  applyMock(server);
 
   server.listen(PORT, HOST, err => {
     if (err) {

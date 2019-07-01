@@ -58,6 +58,7 @@ program
   .option('-d --out-dir <dir>', 'the directory to output files')
   .option('--public-url <url>', 'the base URL your application bundle will be deployed at')
   .option('--log-level <level>', 'set log level')
+  .option('--qa', 'set env qa')
   .action(builder);
 
 program
