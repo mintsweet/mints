@@ -2,48 +2,38 @@
 
 Mints built in a lot of tool methods, you can run `npm install mints-utils -S` to use them.
 
+## $
+
+Package dom operation related method。
+
+```javascript
+const btn = $('.btn');
+```
+
 ## env
 
 Related to the operating environment.
 
-### getDevice
+### device
 
 Use this method to get device type run your application.
 
 ```javascript
 import { device } from 'mints-utils';
 
-const isAndroid = device === 'android' ? true : false;
-const isIos = device === 'ios' ? true : false;
-const isOther = device !== 'android' && device !== 'ios';
+const isAndroid = device() === 'android' ? true : false;
+const isIos = device() === 'ios' ? true : false;
+const isOther = device() !== 'android' && device !== 'ios';
 ```
 
-### isWX
+### app
 
-Determine if your app in wechat.
-
-```javascript
-import { isWx } from 'mints-utils';
-
-if (isWx) {
-  return true;
-} else {
-  return false;
-}
-```
-
-### isQQ
-
-Determine if your app in QQ.
+Use this method to get application type.
 
 ```javascript
-import { isQQ } from 'mints-utils';
+import { app } from 'mints-utils';
 
-if (isQQ) {
-  return true;
-} else {
-  return false;
-}
+const isWx = app() === 'wechat' ? true : false;
 ```
 
 ## format
@@ -96,6 +86,16 @@ import { storage } from 'mints-utils';
 storage.get('token');
 ```
 
+### storage.del
+
+`window.localStorage.removeItem`.
+
+```javascript
+import { storage } from 'mints-utils';
+
+storage.del('token');
+```
+
 ### storage.clear
 
 `window.localStorage.clear`.
@@ -104,6 +104,20 @@ storage.get('token');
 import { storage } from 'mints-utils';
 
 storage.clear();
+```
+
+## tool
+
+A some general tool method.
+
+### title
+
+set document title.
+
+```javascript
+import { tool } from 'mints-utils';
+
+tool.title('设置网页标题');
 ```
 
 ## url
@@ -117,8 +131,8 @@ To get params in url.
 ```javascript
 import { url } from 'mints-utils';
 
-const url = 'https://www.baidu.com?date=1111&type=xxx';
-const params = url.get(url); // { date: 1111, type: 'xxx' }
+const link = 'https://www.baidu.com?date=1111&type=xxx';
+const params = url.get(link); // { date: 1111, type: 'xxx' }
 ```
 
 ### url.set
@@ -128,8 +142,8 @@ To set params in url.
 ```javascript
 import { url } from 'mints-utils';
 
-const url = 'https://www.baidu.com';
-const params = url.set(url, { date: 1111, type: 'xxx' }); // https://www.baidu.com?date=1111&type=xxx
+const link = 'https://www.baidu.com';
+const params = url.link(url, { date: 1111, type: 'xxx' }); // https://www.baidu.com?date=1111&type=xxx
 ```
 
 ## Http
