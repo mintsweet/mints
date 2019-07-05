@@ -3,7 +3,7 @@ import { $ } from 'mints-utils';
 import * as API from './api';
 import './index.less';
 
-class Index extends App {
+class Home extends App {
   dom = {
     list: $('#js-list'),
   }
@@ -20,14 +20,21 @@ class Index extends App {
   renderDom(data) {
     const dom = data.users.map(item => `
       <li>
+        <span>${item.id}</span>
         <span>${item.nickname}</span>
-        <span>${item.email}</span>
       </li>
     `);
 
-    this.dom.list.html(dom);
+    dom.unshift(`
+      <li>
+        <span>ID</span>
+        <span>昵称</span>
+      </li>
+    `);
+
+    this.dom.list.html(dom.join(''));
   }
 }
 
-const app = new Index();
+const app = new Home();
 app.init();

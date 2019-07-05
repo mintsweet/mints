@@ -1,0 +1,57 @@
+@import '~@/styles/variable.less';
+
+.mt-modal {
+  display: none;
+
+  &.show {
+    display: block;
+  }
+
+  .mt-modal_popup {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, .7);
+  }
+
+  .mt-modal_inner {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 85%;
+    overflow: hidden;
+    background-color: #fff;
+    border-radius: 4px;
+    transform: translate(-50%, -50%);
+  }
+
+  .mt-modal_header {
+    padding-top: 25px;
+    font-weight: 500;
+    text-align: center;
+  }
+
+  .mt-modal_content {
+    padding: 25px;
+    line-height: 1.5;
+    text-align: center;
+  }
+
+  .mt-modal_footer {
+    display: flex;
+    border-top: 1px solid #eaeaea;
+
+    .mt-modal_btn {
+      flex: 1;
+      color: @primary-color;
+      line-height: 45px;
+      text-align: center;
+
+      &:first-child {
+        border-right: 1px solid #eaeaea;
+      }
+    }
+  }
+}
