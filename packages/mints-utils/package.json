@@ -1,6 +1,6 @@
 {
   "name": "mints-utils",
-  "version": "1.0.0-beta.5",
+  "version": "1.0.0",
   "description": "utils package for mints",
   "keywords": [
     "mints",
@@ -10,9 +10,9 @@
   "main": "lib/index.js",
   "types": "index.d.ts",
   "scripts": {
-    "test": "jest",
+    "test": "rm -rf lib && npm run build && jest",
     "build": "babel ./src --out-dir ./lib",
-    "prepublishOnly": "npm test && rm -rf lib && npm run build"
+    "prepublishOnly": "npm test"
   },
   "jest": {
     "verbose": true,
