@@ -1,5 +1,6 @@
 const path = require('path');
 const fs = require('fs');
+const assert = require('assert');
 
 const mockDir = path.join(process.cwd(), './mock');
 
@@ -11,7 +12,7 @@ function getConfig() {
   files.forEach(filename => {
     try {
       const temp = require(path.join(mockDir, filename));
-      Object.assign({}, config, temp);
+      config = Object.assign({}, config, temp);
     } catch(e) {
 
     }
@@ -29,13 +30,12 @@ module.exports = (server) => {
   Object.keys(config).forEach(key => {
     const keyParsed = parseKey(key);
 
-    if (!!app[keyParsed.method]) {
-      throw new Error(`method of ${key} is not valid`);
-    }
-
-    if (typeof config[key] === 'function' || typeof config[key] === 'object') {
-      throw new Error(`mock value of ${key} should be function or object or string, but got ${typeof config[key]}`);
-    }
+    assert(!!app[keyParsed.method], `method of ${key} is not valid`);
+    assert(
+      typeof config[key] === 'function' ||
+      typeof config[key] === 'object' ||
+      typeof config[key] === 'string',
+    `mock value of ${key} should be function or object or string, but got ${typeof config[key]}`);
 
     mockRules.push({
       path: keyParsed.path,

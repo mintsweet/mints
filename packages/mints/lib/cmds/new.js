@@ -7,10 +7,10 @@ const validateProjectName = require('validate-npm-package-name');
 const spawn = require('cross-spawn');
 const logger = require('../utils/logger');
 
-const ALL_DEPENDENCIES = ['mints-template', 'mints-utils'];
+const ALL_DEPENDENCIES = ['mints', 'mints-template', 'mints-utils'];
 
 const install = (root, useYarn, verbose) => {
-  logger.info('Installing mints mints-template mints-utils and mints-ui...');
+  logger.info('Installing mints mints-template and mints-utils...');
 
   return new Promise((resolve, reject) => {
     let command;
@@ -56,8 +56,8 @@ const generateFile = (appPath, appName, template = 'basic') => {
 
   appPkg.dependencies = appPkg.dependencies || {};
   appPkg.scripts = {
-    start: 'node ../packages/mints/bin/mints.js start',
-    build: 'node ../packages/mints/bin/mints.js build',
+    start: 'mints start',
+    build: 'mints build',
   };
 
   appPkg.eslintConfig = {

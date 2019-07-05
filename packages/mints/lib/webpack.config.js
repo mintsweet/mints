@@ -1,5 +1,6 @@
 const path = require('path');
 const glob = require('glob');
+const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const WebpackBar = require('webpackbar');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
@@ -89,13 +90,15 @@ module.exports = (options, env) => {
     }
   };
 
+  const DEPLOY_ENV = isEnvProduction ? options.qa ? 'qa' : 'prod' : 'dev';
+
   const plugins = generateHTMLPlugin()
     .concat([
       new WebpackBar(),
       new CleanWebpackPlugin(),
       new FriendlyErrorsWebpackPlugin(),
       new webpack.DefinePlugin({
-        DEPLOY_ENV: isEnvProduction ? options.qa ? 'qa' : 'prod' : 'dev',
+        'process.env.DEPLOY_ENV': JSON.stringify(DEPLOY_ENV),
       }),
       isEnvProduction && new MiniCssExtractPlugin({
         filename: '[name].css',
@@ -154,9 +157,15 @@ module.exports = (options, env) => {
               presets: ['@babel/preset-env'],
               plugins: [
                 [
-                  require.resolve('@babel/plugin-proposal-class-properties')
-                ]
-              ]
+                  require.resolve('@babel/plugin-proposal-class-properties'),
+                  {
+                    'loose': true,
+                  },
+                ],
+                [
+                  require.resolve('@babel/plugin-transform-runtime'),
+                ],
+              ],
             },
           },
         },
