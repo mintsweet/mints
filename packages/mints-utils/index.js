@@ -1,3 +1,1 @@
-const lib = require('./src');
-
-module.exports = lib;
+module.exports = require('./src');

@@ -7,7 +7,8 @@ export const device = () => {
   } else if (/iPhone|iPod|iPad/i.test(userAgent)) {
     return 'ios';
   }
-  return false;
+
+  return '未知';
 };
 
 // 获取 App 类型
@@ -18,7 +19,7 @@ const app = () => {
     return 'wechat';
   }
 
-  return false;
+  return '未知';
 };
 
 export default {

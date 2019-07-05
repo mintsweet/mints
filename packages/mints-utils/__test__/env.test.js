@@ -28,7 +28,7 @@ test('not android or ios device', () => {
     writable: true,
   });
 
-  expect(env.device()).toEqual(false);
+  expect(env.device()).toEqual('未知');
 });
 
 test('wechat app', () => {
@@ -46,5 +46,5 @@ test('unable to determine app type', () => {
     writable: true,
   });
 
-  expect(env.app()).toEqual(false);
+  expect(env.app()).toEqual('未知');
 });
