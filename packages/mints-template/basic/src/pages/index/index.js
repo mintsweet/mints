@@ -6,10 +6,12 @@ import './index.less';
 class Home extends App {
   dom = {
     list: $('#js-list'),
+    btn: $('#js-go'),
   }
 
   init() {
     this.getData();
+    this.bindEvent();
   }
 
   async getData() {
@@ -33,6 +35,12 @@ class Home extends App {
     `);
 
     this.dom.list.html(dom.join(''));
+  }
+
+  bindEvent() {
+    this.dom.btn.on('click', () => {
+      window.location.href = '/utils-show.html';
+    });
   }
 }
 
