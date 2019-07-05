@@ -1,23 +1,37 @@
 import axios from 'axios';
 
-axios.interceptors.request.use(config => {
-  return config;
-}, err => {
-  return Promise.reject(err);
-});
-
-axios.interceptors.response.use(res => {
-  return res.data;
-}, err => {
-  return Promise.reject(err.message);
-});
-
 export default class Http {
-  constructor(host) {
+  constructor(host, opts) {
     this.host = host;
+    this.opts = {
+      requestBefore: () => {},
+      responseError: () => {},
+      ...opts,
+    };
+    this.init();
   }
 
-  get(url, data, opts) {
+  init = () => {
+    axios.interceptors.request.use(config => {
+      if (this.opts.requestBefore) {
+        config = this.opts.requestBefore(config) || config;
+      }
+      return config;
+    }, err => {
+      return Promise.reject(err);
+    });
+
+    axios.interceptors.response.use(res => {
+      return res.data;
+    }, err => {
+      if (this.opts.responseError) {
+        this.opts.responseError();
+      }
+      return Promise.reject(err.message);
+    });
+  }
+
+  get = (url, data, opts) => {
     return axios({
       ...opts,
       baseURL: this.host,
@@ -27,7 +41,7 @@ export default class Http {
     });
   }
 
-  post(url, data, opts) {
+  post = (url, data, opts) => {
     return axios({
       ...opts,
       baseURL: this.host,
@@ -37,7 +51,7 @@ export default class Http {
     });
   }
 
-  put(url, data, opts) {
+  put = (url, data, opts) => {
     return axios({
       ...opts,
       baseURL: this.host,
@@ -47,7 +61,7 @@ export default class Http {
     });
   }
 
-  patch(url, data, opts) {
+  patch = (url, data, opts) => {
     return axios({
       ...opts,
       baseURL: this.host,
@@ -57,7 +71,7 @@ export default class Http {
     });
   }
 
-  del(url, opts) {
+  del = (url, opts) => {
     return axios({
       ...opts,
       baseURL: this.host,

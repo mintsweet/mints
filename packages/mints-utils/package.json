@@ -1,6 +1,6 @@
 {
   "name": "mints-utils",
-  "version": "1.0.0-beta.3",
+  "version": "1.0.0-beta.4",
   "description": "utils package for mints",
   "keywords": [
     "mints",
@@ -16,7 +16,7 @@
   "scripts": {
     "test": "jest",
     "build": "babel ./src --out-dir ./lib",
-    "prepublish": "npm test && npm build"
+    "prepublishOnly": "npm test && rm -rf lib && npm run build"
   },
   "jest": {
     "verbose": true,
@@ -26,24 +26,15 @@
       "html"
     ]
   },
-  "babel": {
-    "presets": [
-      [
-        "@babel/preset-env",
-        {
-          "targets": {
-            "node": "current"
-          }
-        }
-      ]
-    ]
-  },
   "dependencies": {
     "axios": "^0.18.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.4.4",
     "@babel/core": "^7.4.5",
+    "@babel/plugin-proposal-class-properties": "^7.5.0",
+    "@babel/plugin-transform-classes": "^7.4.4",
+    "@babel/plugin-transform-runtime": "^7.5.0",
     "@babel/preset-env": "^7.4.5",
     "babel-jest": "^24.8.0",
     "jest": "^24.8.0"
