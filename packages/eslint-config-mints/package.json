@@ -1,6 +1,6 @@
 {
   "name": "eslint-config-mints",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "eslint config for mints",
   "keywords": [
     "mints",
@@ -10,6 +10,7 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
+    "babel-eslint": "^10.0.2",
     "eslint-restricted-globals": "^0.2.0"
   }
 }

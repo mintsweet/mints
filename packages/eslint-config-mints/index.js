@@ -1,4 +1,8 @@
 module.exports = {
+  root: true,
+
+  parser: 'babel-eslint',
+
   extends: [
     './rules/possible-errors',
     './rules/best-practices',
@@ -10,7 +14,20 @@ module.exports = {
   ].map(require.resolve),
 
   parserOptions: {
-    ecmaVersion: 2017,
+    ecmaVersion: 2018,
     sourceType: 'module'
-  }
+  },
+
+  env: {
+    browser: true,
+    commonjs: true,
+    es6: true,
+    jest: true,
+    node: true,
+  },
+
+  globals: {
+    window: true,
+    document: true,
+  },
 };
