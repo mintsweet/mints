@@ -1,6 +1,6 @@
 {
   "name": "mints",
-  "version": "1.0.0-beta.2",
+  "version": "1.0.0-beta.3",
   "description": "simple and efficient h5 development tools",
   "keywords": [
     "h5",
@@ -27,6 +27,8 @@
     "cross-spawn": "^6.0.5",
     "css-loader": "^2.1.1",
     "envinfo": "^7.2.0",
+    "eslint": "^6.0.1",
+    "eslint-config-mints": "^1.1.0",
     "eslint-loader": "^2.1.2",
     "friendly-errors-webpack-plugin": "^1.7.0",
     "fs-extra": "^7.0.1",

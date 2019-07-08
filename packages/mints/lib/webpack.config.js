@@ -144,7 +144,10 @@ module.exports = (options, env) => {
           include: path.join(options.cwd, './src'),
           use: [
             {
-              loader: 'eslint-loader'
+              loader: require.resolve('eslint-loader'),
+              options: {
+                eslintPath: require.resolve('eslint'),
+              },
             },
           ],
         },
