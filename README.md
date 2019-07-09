@@ -6,7 +6,7 @@
 
 <h1 align="center">Mints</h1>
 
-<div align="center">****
+<div align="center">
 
 简单、高效的`H5`开发工具
 
