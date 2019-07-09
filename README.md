@@ -1,38 +1,32 @@
-## Mints
+<p align="center">
+  <a href="http://www.mintsweet.cn">
+    <img width="200" src="http://image.mintsweet.cn/logo.svg" />
+  </a>
+</p>
 
-> simple and efficient h5 development tools.
+<h1 align="center">Mints</h1>
 
-## Features
+<div align="center">****
 
-  - Easy to use.
-  - Zero config by default.
-  - Eliminating webpack complex config.
-  - Reduced access costs.
+简单、高效的`H5`开发工具
 
-## Quick start
+[![GitHub issues](https://img.shields.io/github/issues/mintsweet/mints.svg?style=flat-square)](https://github.com/mintsweet/mints/issues)
+[![GitHub license](https://img.shields.io/github/license/mintsweet/mints.svg?style=flat-square)](https://github.com/mintsweet/mints/blob/master/LICENSE)
 
-1. init project
+</div>
 
-```bash
-npx mints new project_name
-```
+## ✨ 特性
 
-2. develop your page
+  - 零配置使用
+  - 集成多种工具方法
+  - 支持单页、多页不同方式的开发
 
-```bash
-$ mints start
-```
-
-3. build your project
+## 🌈 安装
 
 ```bash
-$ mints build
+$ npm install -g mints
 ```
 
-## Document
+## 🔨 协议
 
-[document](./docs/README.md)
-
-## License
-
-MIT
+mints &copy; [青湛](https://github.com/mintsweet), Released under the [MIT](./LICENSE) License.
