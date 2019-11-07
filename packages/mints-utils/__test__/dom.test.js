@@ -1,4 +1,4 @@
-import { $ } from '../index';
+import { $ } from '../src';
 
 test('function query is right', () => {
   document.body.innerHTML = `

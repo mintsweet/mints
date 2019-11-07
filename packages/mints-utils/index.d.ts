@@ -9,13 +9,18 @@ export namespace format {
 }
 
 export class Http {
-  constructor(host: string);
+  constructor(host: string, opts?: object);
+  get(url: string, data?: object, opts?: object): any;
+  post(url: string, data?: object, opts?: object): any;
+  put(url: string, data?: object, opts?: object): any;
+  patch(url: string, data?: object, opts?: object): any;
+  del(url: string, data?: object, opts?: object): any;
 }
 
 export namespace storage {
-  function set(): void;
-  function get(): string | object;
-  function del(): void;
+  function set(key: string, data: any): void;
+  function get(key: string): any;
+  function del(key: string): void;
   function clear(): void;
 }
 

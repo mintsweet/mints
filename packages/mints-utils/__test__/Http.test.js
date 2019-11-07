@@ -1,4 +1,4 @@
-import { Http } from '../index';
+import { Http } from '../src';
 
 const http = new Http('https://jsonplaceholder.typicode.com');
 

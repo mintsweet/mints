@@ -1,4 +1,4 @@
-import { storage } from '../index';
+import { storage } from '../src';
 
 test('test function storage\'s set', () => {
   storage.set('user', 'admin');

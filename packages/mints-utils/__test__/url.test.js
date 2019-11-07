@@ -1,4 +1,4 @@
-import { url } from '../index';
+import { url } from '../src';
 
 const testUrl = 'http://www.baidu.com?type=search&params=name';
 

@@ -25,9 +25,9 @@ export default class Http {
       return res.data;
     }, err => {
       if (this.opts.responseError) {
-        this.opts.responseError();
+        this.opts.responseError(err);
       }
-      return Promise.reject(err.message);
+      return Promise.reject(err);
     });
   }
 
@@ -71,12 +71,13 @@ export default class Http {
     });
   }
 
-  del = (url, opts) => {
+  del = (url, data, opts) => {
     return axios({
       ...opts,
       baseURL: this.host,
       method: 'delete',
       url,
+      data,
     });
   }
 }

@@ -1,4 +1,4 @@
-import { format } from '../index';
+import { format } from '../src';
 
 test('test function format.date when params type is not Date', () => {
   const date = '2018-03-03';
