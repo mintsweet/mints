@@ -1,5 +1,13 @@
 # mints-utils
 
+## 1.1.0
+
+`2020-06-17`
+
+* Refactoring.
+  - 🌟 Use typescript refactoring.
+  - 🛠 Delete unusual modules.
+
 ## 1.0.1
 
 `2019-11-07`
