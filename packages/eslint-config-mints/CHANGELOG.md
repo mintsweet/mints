@@ -1,3 +1,13 @@
+## 1.2.0
+
+`2021-07-13`
+
+Rule Change:
+  * `comma-dangle`: option functions change from never to only-multiline.
+  * `function-paren-newline`: option change from multiline to consistent.
+  * `implicit-arrow-linebreak`: change from error to off.
+  * `keyword-spacing`: remove option overrides.
+
 ## 1.1.0
 
 `2019-07-18`
